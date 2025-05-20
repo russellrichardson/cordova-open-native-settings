@@ -101,7 +101,12 @@
         result = [self do_open:[prefix stringByAppendingString:@"NOTES"]];
     }
     else if ([key isEqualToString:@"notification_id"]) {
-        result = [self do_open:[prefix stringByAppendingString:@"NOTIFICATIONS_ID"]];
+        #ifndef APP_BUNDLE_ID
+          result = [self do_open:[prefix stringByAppendingString:@"NOTIFICATIONS_ID"]];
+        #else
+          NSString* url = [NSString stringWithFormat:@"NOTIFICATIONS_ID&path=%@", APP_BUNDLE_ID];
+          result = [self do_open:[prefix stringByAppendingString:url]];
+        #endif
     }
     else if ([key isEqualToString:@"passbook"]) {
         result = [self do_open:[prefix stringByAppendingString:@"PASSBOOK"]];
